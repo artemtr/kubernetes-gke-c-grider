@@ -1,0 +1,34 @@
+sudo: required
+language: generic
+
+services:
+  - docker
+
+# before_install:
+#   - docker build -t artemtr/react-test -f ./client/Dockerfile.dev ./client
+
+# script:
+#   - docker run -e CI=true artemtr/react-test npm test
+
+after_success:
+  - docker build -t 18011993/multi-client ./client
+  - docker build -t 18011993/multi-nginx ./nginx
+  - docker build -t 18011993/multi-server ./server
+  # Log in to the docker CLI
+  - echo "$DOCKER_PASS" | docker login -u "$DOCKER_ID" --password-stdin
+  # Take those images and push them to docker hub
+  - docker push 18011993/multi-client
+  - docker push 18011993/multi-nginx
+  - docker push 18011993/multi-server
+
+deploy:
+  provider: elasticbeanstalk
+  access_key_id: $AWS_ACCESS_KEY_ID
+  secret_access_key: $AWS_SECRET_ACCESS_KEY
+  region: 'us-east-1'
+  app: 'multi-docker'
+  env: 'Multidocker-env'
+  bucket_name: 'elasticbeanstalk-us-east-1-775669059585'
+  bucket_path: 'multi-docker'
+  on:
+    branch: master

@@ -19,7 +19,7 @@ function App() {
           <Link to="/">Home</Link>
           <Link to="/otherpage">Other Page</Link>
         </header>
-        Learn !
+        Learn ! !!
         <div>
           <Route path="/otherpage" component={OtherPage} />
         </div>

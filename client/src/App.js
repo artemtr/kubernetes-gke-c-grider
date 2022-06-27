@@ -16,7 +16,7 @@ function App() {
             target="_blank"
             rel="noopener noreferrer"
           ></a>
-          <Link to="/">Home</Link>
+          <Link to="/">Work with skaffold !!</Link>
           <Link to="/otherpage">Other Page</Link>
         </header>
         Learn ! !!
